@@ -8,7 +8,7 @@ public class User {
     public String mobile = "default";
 
     //Additional personal information
-    public String birthday = "default";
+    public String age = "default";
     public String gender = "default";
     public String height = "default";
     public String weight = "default";

@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         progress_bar_reg.setOnClickListener(this);
 
         name_reg = (EditText) findViewById(R.id.editTextNameReg);
-        mail_reg = (EditText) findViewById(R.id.editTextEmailReset);
+        mail_reg = (EditText) findViewById(R.id.editTextEmailLogin);
         mobile_reg = (EditText) findViewById(R.id.editTextMobileReg);
         password_reg = (EditText) findViewById(R.id.editTextPasswordLogin);
     }

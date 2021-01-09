@@ -3,10 +3,13 @@ package com.th_nuernberg.homeekg.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -14,11 +17,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.th_nuernberg.homeekg.R;
+import com.th_nuernberg.homeekg.login.User;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Attributes and Constants
     private ImageView bluetooth_monitor;
+    private FirebaseUser user;
+    private DatabaseReference reference;
+    private String userID;
 
     //Methods
     @Override
@@ -30,9 +43,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Home EKG");
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("users");
+        userID = user.getUid();
 
         bluetooth_monitor = (ImageView) findViewById(R.id.bluetoothMonitor);
         bluetooth_monitor.setOnClickListener(this);
+
+        final TextView welcomeTextView = (TextView) findViewById(R.id.welcomeMain);
+        final TextView nameTextView = (TextView) findViewById(R.id.nameMain);
+        final TextView mailTextView = (TextView) findViewById(R.id.mailMain);
+        final TextView ageTextView = (TextView) findViewById(R.id.ageMain);
+        final TextView genderTextView = (TextView) findViewById(R.id.genderMain);
+        final TextView heightTextView = (TextView) findViewById(R.id.heightMain);
+        final TextView weightTextView = (TextView) findViewById(R.id.weightMain);
+
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User userProfile = snapshot.getValue(User.class);
+                if(userProfile != null) {
+                    String name = userProfile.name;
+                    String mail = userProfile.mail;
+                    String age = userProfile.age;
+                    String gender = userProfile.gender;
+                    String height = userProfile.height;
+                    String weight= userProfile.weight;
+
+                    welcomeTextView.setText("Willkommen zurück, " + name + "!");
+                    nameTextView.setText(name);
+                    mailTextView.setText(mail);
+                    ageTextView.setText(age);
+                    genderTextView.setText(gender);
+                    heightTextView.setText(height + "m");
+                    weightTextView.setText(weight + "kg");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MainActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

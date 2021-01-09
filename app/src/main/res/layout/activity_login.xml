@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/register_hero_forgot"
+                    android:id="@+id/imageViewLoginHero"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -63,12 +63,12 @@
             </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/forgot_password"
+                android:id="@+id/textInputEmail"
                 style="@style/parent"
                 android:layout_marginTop="@dimen/loginViewsMargin">
 
                 <EditText
-                    android:id="@+id/editTextEmailReset"
+                    android:id="@+id/editTextEmailLogin"
                     style="@style/modifiedEditText"
                     android:hint="@string/login_email_hint"
                     android:inputType="textEmailAddress"

@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progress_bar_login = (ProgressBar) findViewById(R.id.progressBarLogin);
         progress_bar_login.setOnClickListener(this);
 
-        edit_Text_Mail_login = (EditText) findViewById(R.id.editTextEmailReset);
+        edit_Text_Mail_login = (EditText) findViewById(R.id.editTextEmailLogin);
         edit_Text_Mail_login.setOnClickListener(this);
 
         edit_Text_Password_login = (EditText) findViewById(R.id.editTextPasswordLogin);
@@ -156,7 +156,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(task.isSuccessful()) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                    if(!user.isEmailVerified()) {
+                    if(user.isEmailVerified()) {
                         //Redirect to user profile
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         overridePendingTransition(R.anim.slide_in_right, R.anim.stay);

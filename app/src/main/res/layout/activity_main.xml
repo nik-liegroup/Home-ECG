@@ -14,28 +14,172 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/bluetoothMonitor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
         android:background="#FFFFFF"
         android:src="@drawable/ic_bluetooth"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/welcomeMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/include" />
 
     <Button
         android:id="@+id/startScanningMonitor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:text="@string/start_scanning"
-        app:layout_constraintBottom_toBottomOf="@+id/bluetoothMonitor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bluetoothMonitor"
-        app:layout_constraintTop_toTopOf="@+id/bluetoothMonitor" />
+        app:layout_constraintEnd_toEndOf="@+id/welcomeMain"
+        app:layout_constraintStart_toStartOf="@+id/welcomeMain"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeMain" />
+
+    <TextView
+        android:id="@+id/nameMainHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:text="Name: "
+        android:textColor="@color/denim"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startScanningMonitor" />
+
+    <TextView
+        android:id="@+id/nameMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/nameMainHeader"
+        app:layout_constraintTop_toBottomOf="@+id/nameMainHeader" />
+
+    <TextView
+        android:id="@+id/mailMainHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Email: "
+        android:textColor="@color/denim"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/nameMainHeader"
+        app:layout_constraintTop_toBottomOf="@+id/nameMain" />
+
+
+    <TextView
+        android:id="@+id/mailMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/mailMainHeader"
+        app:layout_constraintTop_toBottomOf="@+id/mailMainHeader" />
+
+    <TextView
+        android:id="@+id/ageMainHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Age: "
+        android:textColor="@color/denim"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/mailMainHeader"
+        app:layout_constraintTop_toBottomOf="@+id/mailMain" />
+
+    <TextView
+        android:id="@+id/ageMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/ageMainHeader"
+        app:layout_constraintTop_toBottomOf="@+id/ageMainHeader" />
+
+    <TextView
+        android:id="@+id/genderMainHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Gender: "
+        android:textColor="@color/denim"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/ageMainHeader"
+        app:layout_constraintTop_toBottomOf="@+id/ageMain" />
+
+    <TextView
+        android:id="@+id/genderMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/genderMainHeader"
+        app:layout_constraintTop_toBottomOf="@+id/genderMainHeader" />
+
+    <TextView
+        android:id="@+id/heightMainHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Height: "
+        android:textColor="@color/denim"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/genderMainHeader"
+        app:layout_constraintTop_toBottomOf="@+id/genderMain" />
+
+    <TextView
+        android:id="@+id/heightMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/heightMainHeader"
+        app:layout_constraintTop_toBottomOf="@+id/heightMainHeader" />
+
+    <TextView
+        android:id="@+id/weightMainHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Weight: "
+        android:textColor="@color/denim"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/heightMainHeader"
+        app:layout_constraintTop_toBottomOf="@+id/heightMain" />
+
+    <TextView
+        android:id="@+id/weightMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/weightMainHeader"
+        app:layout_constraintTop_toBottomOf="@+id/weightMainHeader" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
