@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -19,11 +18,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.th_nuernberg.homeekg.R;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
@@ -31,25 +37,31 @@ import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
+    //Attributes and Constants
+    private static final int RC_SIGN_IN = 101;
     private TextView register_login, forgot_login;
     private ImageView plus_login, facebook_login, google_login;
     private CircularProgressButton cirLoginButton_login;
     private ProgressBar progress_bar_login;
     private CheckBox remember_login;
     private EditText edit_Text_Mail_login, edit_Text_Password_login;
-
     private FirebaseAuth mAuth;
+    private GoogleSignInClient mGoogleSignInClient;
 
+    //Methods
+    //Method: onCreate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //for changing status bar icon colors
+
+        //Change status bar icon colors for SKD > 23
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
         setContentView(R.layout.activity_login);
         changeStatusBarColor();
 
+        //View Objects
         register_login = (TextView) findViewById(R.id.textViewRegisterReset);
         register_login.setOnClickListener(this);
 
@@ -77,14 +89,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edit_Text_Password_login = (EditText) findViewById(R.id.editTextPasswordLogin);
         edit_Text_Password_login.setOnClickListener(this);
 
-        //Auto Login
-        mAuth = FirebaseAuth.getInstance();
         remember_login = (CheckBox) findViewById(R.id.checkBox_login);
 
-        //Auto Login
+        //Login
+        mAuth = FirebaseAuth.getInstance();
+
+        //Auto Login Email
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox =  preferences.getString("remember", "");
-
         if(checkbox.equals("true") && (mAuth.getCurrentUser() != null)) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
@@ -92,17 +104,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else {
             Toast.makeText(this, "Please sign in!", Toast.LENGTH_SHORT).show();
         }
+
+        //Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-    private void changeStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setStatusBarColor(getResources().getColor(R.color.register_bk_color));
+    //Method: onActivityResult
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Result returned from launching the Intent from GoogleSignInApi.getSignInIntent
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                //Successful google sign in
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                //Failed google sign in
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
+    //Method: onClick
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
@@ -112,22 +141,65 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
                 break;
             case R.id.cirLoginButtonReset:
-                userLogin();
+                userLoginMail();
+                break;
+            case R.id.imageViewGoogleReset:
+                userLoginGoogle();
+                break;
+            case R.id.imageViewFacebookReset:
+                // TO DO
                 break;
             case R.id.TextViewForgotLogin:
                 startActivity(new Intent(LoginActivity.this, ResetActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
                 break;
-            case R.id.imageViewFacebookReset:
-                // TO DO
-                break;
-            case R.id.imageViewGoogleReset:
-                // TO DO
-                break;
         }
     }
 
-    private void userLogin() {
+    //Method: changeStatusBarColor
+    private void changeStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.register_bk_color));
+        }
+    }
+
+    //Method: userLoginGoogle
+    private void userLoginGoogle() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    //Method: firebaseAuthWithGoogle
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(LoginActivity.this, user.getEmail(), Toast.LENGTH_SHORT).show();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                           Toast.makeText(LoginActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+    }
+
+    //Method: updateUI
+    private void updateUI(FirebaseUser user) {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    //Method: userLoginMail
+    private void userLoginMail() {
         String mail_login = edit_Text_Mail_login.getText().toString().trim();
         String password_login = edit_Text_Password_login.getText().toString().trim();
 
@@ -165,6 +237,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(task.isSuccessful()) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if(user.isEmailVerified()) {
+                        //Auto Login
                         if(remember_login.isChecked()) {
                             editor.putString("remember", "true");
                             editor.apply();

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ import com.th_nuernberg.homeekg.login.User;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Attributes and Constants
-    private ImageView bluetooth_monitor;
+    private Button bluetooth_monitor;
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
@@ -40,14 +41,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setTitle("Home EKG");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("users");
         userID = user.getUid();
 
-        bluetooth_monitor = (ImageView) findViewById(R.id.bluetoothMonitor);
+        bluetooth_monitor = (Button) findViewById(R.id.startScanningMonitor);
         bluetooth_monitor.setOnClickListener(this);
 
         final TextView welcomeTextView = (TextView) findViewById(R.id.welcomeMain);
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.bluetoothMonitor:
+            case R.id.startScanningMonitor:
                 startActivity(new Intent(this, ScannerActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
                 break;
