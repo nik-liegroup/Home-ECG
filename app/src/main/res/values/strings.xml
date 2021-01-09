@@ -1,0 +1,80 @@
+<resources>
+
+    <!-- Standard Strings -->
+    <string name="app_name">Home EKG</string>
+
+    <!-- Menu Strings -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_user">Niklas Gampl</string>
+    <string name="nav_header_mail">nikpost@gampl.de</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_profile">Profile</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_sign_out">Sign Out</string>
+    <string name="menu_monitor">Heart Rate Monitor</string>
+    <string name="menu_data">Data Management</string>
+    <string name="menu_about">About</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_landscape">Landscape</string>
+
+
+    <!-- Login and Registration Strings -->
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="dialog_message">Password</string>
+    <string name="alr_acc">Home\nEKG\nLogin</string>
+    <string name="logout_dialog_message">Do you really want to log out?</string>
+    <string name="logout_dialog_title">Logout</string>
+    <string name="logout_ok">Ok</string>
+    <string name="logout_cancel">Cancel</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="login_remember">Remember me</string>
+    <string name="logout_forgot">Forgot Password?</string>
+
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    !-- Strings used for Bluetooth -->
+    <string name="screen_title_bluetooth">Device List</string>
+    <string name="action_settings_bluetooth">Settings</string>
+    <string name="start_scanning">Connect to BLE device</string>
+    <string name="bpm">BPM</string>
+
+    <!-- Trash -->
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- Merge -->
+    <string name="ble_not_supported">BLE is not supported</string>
+    <string name="label_data">Received:</string>
+    <string name="label_device_address">Device address:</string>
+    <string name="label_state">State:</string>
+    <string name="no_data">No data</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="title_devices">BLE Device Scan</string>
+    <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
+    <string name="screen">Landscape</string>
+
+    <string name="unknown_device">Unknown device</string>
+    <string name="unknown_characteristic">Unknown characteristic</string>
+    <string name="unknown_service">Unknown service</string>
+
+    <!-- Menu items -->
+    <string name="menu_connect">Connect</string>
+    <string name="menu_disconnect">Disconnect</string>
+    <string name="menu_scan">Scan</string>
+    <string name="menu_stop">Stop</string>
+
+    <string name="message">Message to send</string>
+    <string name="send">Send</string>
+
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
+    <string name="exit">EXIT App</string>
+</resources>

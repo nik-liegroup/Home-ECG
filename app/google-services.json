@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "729239335596",
+    "project_id": "home-ekg-auth",
+    "storage_bucket": "home-ekg-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729239335596:android:bc73d4104cb76842e5e509",
+        "android_client_info": {
+          "package_name": "com.th_nuernberg.homeekg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729239335596-1bsno4ut2pht6nhnfpkj9jo1lg0bi689.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUI-u0Lm11DLbC8HUJIdoqMs3sA-SAdXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729239335596-1bsno4ut2pht6nhnfpkj9jo1lg0bi689.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
