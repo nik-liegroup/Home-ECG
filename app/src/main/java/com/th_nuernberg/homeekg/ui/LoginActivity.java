@@ -1,6 +1,7 @@
 package com.th_nuernberg.homeekg.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -75,10 +77,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edit_Text_Password_login = (EditText) findViewById(R.id.editTextPasswordLogin);
         edit_Text_Password_login.setOnClickListener(this);
 
-        remember_login = (CheckBox) findViewById(R.id.checkBox_login);
-        remember_login.setOnClickListener(this);
-
+        //Auto Login
         mAuth = FirebaseAuth.getInstance();
+        remember_login = (CheckBox) findViewById(R.id.checkBox_login);
+
+        //Auto Login
+        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox =  preferences.getString("remember", "");
+
+        if(checkbox.equals("true") && (mAuth.getCurrentUser() != null)) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(this, "Please sign in!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void changeStatusBarColor() {
@@ -105,12 +118,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(LoginActivity.this, ResetActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
                 break;
-            //!REMOVE BEFORE RELEASE!
-            case R.id.checkBox_login:
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
-                break;
-            //!REMOVE BEFORE RELEASE!
             case R.id.imageViewFacebookReset:
                 // TO DO
                 break;
@@ -153,10 +160,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mAuth.signInWithEmailAndPassword(mail_login, password_login).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
                 if(task.isSuccessful()) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
                     if(user.isEmailVerified()) {
+                        if(remember_login.isChecked()) {
+                            editor.putString("remember", "true");
+                            editor.apply();
+                            Toast.makeText(LoginActivity.this, "Auto Login checked", Toast.LENGTH_SHORT).show();
+                        } else {
+                            editor.putString("remember", "false");
+                            editor.apply();
+                            Toast.makeText(LoginActivity.this, "Auto Login unchecked", Toast.LENGTH_SHORT).show();
+                        }
                         //Redirect to user profile
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
@@ -165,17 +182,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         user.sendEmailVerification();
                         Toast.makeText(LoginActivity.this, "Check your E-Mail to verify your account!", Toast.LENGTH_LONG).show();
                     }
-                    // Redirect to user profile
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
-                    progress_bar_login.setVisibility(View.INVISIBLE);
-                    finish();
                 } else {
                     Toast.makeText(LoginActivity.this, "Failed to login! Please check your credentials!", Toast.LENGTH_LONG).show();
                     progress_bar_login.setVisibility(View.INVISIBLE);
                 }
             }
         });
-
     }
 }
