@@ -142,9 +142,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .setTitle(R.string.logout_dialog_title);
                 AlertDialog dialog = builder.create();
                 dialog.show();
+                break;
 
             case R.id.action_settings:
-                //TO DO
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
 
             case R.id.action_about:

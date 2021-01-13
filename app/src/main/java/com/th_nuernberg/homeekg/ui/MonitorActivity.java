@@ -46,12 +46,6 @@ import static com.th_nuernberg.homeekg.Constants.landscape;
 import static com.th_nuernberg.homeekg.Constants.orientation;
 import static com.th_nuernberg.homeekg.Constants.portrait;
 
-/**
- * For a given BLE device, this Activity provides the user interface to connect, display data,
- * and display GATT services and characteristics supported by the device.  The Activity
- * communicates with {@code BluetoothLeService}, which in turn interacts with the
- * Bluetooth LE API.
- */
 public class MonitorActivity extends AppCompatActivity {
     private final static String TAG = MonitorActivity.class.getSimpleName();
 
@@ -108,36 +102,28 @@ public class MonitorActivity extends AppCompatActivity {
             System.out.println("Chart has NOT finished drawing.");
         else
             System.out.println("Chart HAS finished drawing.");
-        String[] stringNumbers;// = new String[];
+        String[] stringNumbers;
         stringNumbers = receiveBuffer.split(",");
-        for(int i=0; i < stringNumbers.length; i++)
-        {
+        for(int i=0; i < stringNumbers.length; i++) {
             float value;
-            try
-            {
+            try {
                 value = Float.parseFloat(stringNumbers[i]);
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 value = 0;
                 e.printStackTrace();
                 System.out.println("Parsing error.");
             }
             if(value > 4095 || value < 0)
                 System.out.println("Weird number[" + i + "]: " + value);
-            else
-            {
-                if(i<64)
-                {
-                    try
-                    {
+            else {
+                if(i<64) {
+                    try {
                         data[i] = Float.parseFloat(stringNumbers[i]);
-                    }catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                         data[i] = 2048.0f;
                     }
-                }
-                else
+                } else
                     System.out.println("Extra number[" + i + "]: " + Float.parseFloat(stringNumbers[i]));
             }
         }
