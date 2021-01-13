@@ -1,6 +1,7 @@
 package com.th_nuernberg.homeekg.ui;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ExpandableListView;
@@ -39,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.th_nuernberg.homeekg.Constants.fullscreen;
 import static com.th_nuernberg.homeekg.Constants.landscape;
 import static com.th_nuernberg.homeekg.Constants.orientation;
 import static com.th_nuernberg.homeekg.Constants.portrait;
@@ -67,7 +70,8 @@ public class MonitorActivity extends AppCompatActivity {
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
 
-    CheckBox checkOrientation;
+    private CheckBox checkOrientation;
+    private CheckBox checkFullscreen;
     private LineChart chart;
 
     private String receiveBuffer = "";
@@ -237,6 +241,9 @@ public class MonitorActivity extends AppCompatActivity {
         checkOrientation = findViewById(R.id.checkBoxOrientation);
         checkOrientation.setChecked(orientation);
 
+        checkFullscreen = findViewById(R.id.checkBoxFullscreen);
+        checkFullscreen.setChecked(fullscreen);
+
         if(orientation == portrait)
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         else
@@ -253,6 +260,20 @@ public class MonitorActivity extends AppCompatActivity {
                 {
                     orientation = landscape;
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                }
+            }
+        });
+
+        checkFullscreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkFullscreen.isChecked())
+                {
+                    fullscreen = true;
+                    //TO DO
+                } else {
+                    fullscreen = false;
+                    //TO DO
                 }
             }
         });

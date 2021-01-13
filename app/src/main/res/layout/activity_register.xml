@@ -36,7 +36,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginStart="0dp"
                     android:layout_toEndOf="@+id/textView_home_register"
-                    android:src="@drawable/ic_login_hero" />
+                    android:src="@drawable/ic_pulsschlag_register" />
 
                 <TextView
                     android:id="@+id/textView_home_register"
@@ -188,7 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_google_plus" />
+                    android:src="@drawable/ic_google" />
             </LinearLayout>
 
 
@@ -201,7 +201,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/ic_side_bg" />
+        android:background="@drawable/ic_side" />
 
     <ImageView
         android:id="@+id/ImageViewBackReg"
@@ -212,7 +212,7 @@
         android:layout_marginRight="11dp"
         android:layout_marginBottom="30dp"
         android:adjustViewBounds="false"
-        android:src="@drawable/ic_back_img" />
+        android:src="@drawable/ic_back" />
 
     <ProgressBar
         android:id="@+id/progressBarReg"

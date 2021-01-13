@@ -2,24 +2,29 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_menu_settings"
-        android:orderInCategory="101"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_about"
-        android:icon="@drawable/ic_menu_about"
-        android:orderInCategory="101"
-        android:title="@string/menu_about"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_sign_out"
-        android:icon="@drawable/ic_menu_exit"
-        android:orderInCategory="101"
-        android:title="@string/action_sign_out"
-        app:showAsAction="never" />
-
+        android:title="Main Menu"
+        app:showAsAction="always"
+        android:icon="@drawable/ic__menu_more">
+        <menu>
+            <item
+                android:id="@+id/action_settings"
+                android:icon="@drawable/ic_menu_settings"
+                android:orderInCategory="100"
+                android:title="@string/action_settings"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/action_about"
+                android:icon="@drawable/ic_menu_about"
+                android:orderInCategory="100"
+                android:title="@string/menu_about"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/action_sign_out"
+                android:icon="@drawable/ic_menu_exit"
+                android:orderInCategory="100"
+                android:title="@string/action_sign_out"
+                app:showAsAction="never" />
+        </menu>
+    </item>
 </menu>

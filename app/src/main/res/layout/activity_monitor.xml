@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <include
+        android:id="@+id/include2"
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -19,7 +20,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="65dp"
         android:text="@string/disconnected"
-        android:textSize="18sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,6 +33,16 @@
         app:layout_constraintBottom_toBottomOf="@+id/connection_state"
         app:layout_constraintStart_toEndOf="@+id/connection_state"
         app:layout_constraintTop_toTopOf="@+id/connection_state" />
+
+    <CheckBox
+        android:id="@+id/checkBoxFullscreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/fullscreen"
+        app:layout_constraintBottom_toBottomOf="@+id/checkBoxOrientation"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxOrientation"
+        app:layout_constraintTop_toTopOf="@+id/checkBoxOrientation" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart1"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
@@ -34,14 +35,14 @@ tools:context=".ui.ResetActivity">
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imageViewLoginHero"
+                android:id="@+id/imageViewLoginIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginStart="0dp"
                 android:layout_toEndOf="@+id/textView_home_forgot"
-                android:src="@drawable/ic_register_hero" />
+                android:src="@drawable/ic_pulsschlag_login" />
 
             <TextView
                 android:id="@+id/textView_home_forgot"
@@ -60,11 +61,13 @@ tools:context=".ui.ResetActivity">
             android:layout_centerVertical="true"
             android:layout_weight="1"
             android:text="Dont worry! Just fill in your email and we we'll send you a link to reset your password."
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputEmailResetLayout"
             style="@style/parent"
+            app:boxBackgroundColor="@color/white"
             android:layout_marginTop="@dimen/loginViewsMargin">
 
             <EditText
@@ -152,7 +155,7 @@ tools:context=".ui.ResetActivity">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_google_plus" />
+                android:src="@drawable/ic_google" />
         </LinearLayout>
 
     </LinearLayout>
@@ -162,7 +165,7 @@ tools:context=".ui.ResetActivity">
     android:layout_width="11dp"
     android:layout_height="match_parent"
     android:layout_alignParentRight="true"
-    android:background="@drawable/ic_side_bg" />
+    android:background="@drawable/ic_side" />
 
     <ProgressBar
         android:id="@+id/progressBarForgot"

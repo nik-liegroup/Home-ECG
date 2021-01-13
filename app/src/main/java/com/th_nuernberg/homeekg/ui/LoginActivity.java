@@ -166,7 +166,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     //Method: userLoginGoogle
-    private void userLoginGoogle() {
+    public void userLoginGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -254,6 +254,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     } else {
                         user.sendEmailVerification();
                         Toast.makeText(LoginActivity.this, "Check your E-Mail to verify your account!", Toast.LENGTH_LONG).show();
+                        progress_bar_login.setVisibility(View.INVISIBLE);
                     }
                 } else {
                     Toast.makeText(LoginActivity.this, "Failed to login! Please check your credentials!", Toast.LENGTH_LONG).show();

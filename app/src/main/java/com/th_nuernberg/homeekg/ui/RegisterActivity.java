@@ -80,6 +80,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ImageViewGoogleReg:
             case R.id.ImageViewBackReg:
             case R.id.TextViewHasAccReg:
                 startActivity(new Intent(this, LoginActivity.class));
@@ -96,9 +97,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 registerUser();
                 break;
             case R.id.ImageViewFacebookReg:
-                //TO DO
-                break;
-            case R.id.ImageViewGoogleReg:
                 //TO DO
                 break;
         }

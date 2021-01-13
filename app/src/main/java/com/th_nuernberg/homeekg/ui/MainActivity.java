@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final TextView genderTextView = (TextView) findViewById(R.id.genderMain);
         final TextView heightTextView = (TextView) findViewById(R.id.heightMain);
         final TextView weightTextView = (TextView) findViewById(R.id.weightMain);
+        final TextView countryTextView = (TextView) findViewById(R.id.countryMain);
+        final TextView addressTextView = (TextView) findViewById(R.id.addressMain);
+        final TextView insuranceTextView = (TextView) findViewById(R.id.insuranceMain);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -70,6 +73,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String gender = userProfile.gender;
                     String height = userProfile.height;
                     String weight= userProfile.weight;
+                    String country= userProfile.country;
+                    String city= userProfile.city;
+                    String postcode= userProfile.postcode;
+                    String street= userProfile.street;
+                    String insurance= userProfile.insurance;
 
                     welcomeTextView.setText("Willkommen zurück, " + name + "!");
                     nameTextView.setText(name);
@@ -78,6 +86,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     genderTextView.setText(gender);
                     heightTextView.setText(height + "m");
                     weightTextView.setText(weight + "kg");
+                    countryTextView.setText(country);
+                    addressTextView.setText(street + ", " + postcode + " " + city);
+                    insuranceTextView.setText(insurance);
                 }
             }
 
@@ -137,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.action_about:
-                //TO DO
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

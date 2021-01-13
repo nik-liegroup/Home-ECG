@@ -22,7 +22,7 @@
         android:id="@+id/device_address"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
+        android:paddingBottom="0dp"
         android:text=""
         android:textColor="?attr/colorPrimary"
         android:textSize="12dp" />

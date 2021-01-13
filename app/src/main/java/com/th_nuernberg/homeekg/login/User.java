@@ -12,6 +12,11 @@ public class User {
     public String gender = "default";
     public String height = "default";
     public String weight = "default";
+    public String country = "default";
+    public String city = "default";
+    public String postcode = "default";
+    public String street = "default";
+    public String insurance = "default";
 
     public User() {
 
