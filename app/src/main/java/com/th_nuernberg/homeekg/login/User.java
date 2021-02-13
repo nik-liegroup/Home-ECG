@@ -3,20 +3,18 @@ package com.th_nuernberg.homeekg.login;
 public class User {
 
     //Login attributes
-    public String name = "default";
-    public String mail = "default";
-    public String mobile = "default";
+    public String name = "";
+    public String mail = "";
+    public String mobile = "";
 
     //Additional personal information
-    public String age = "default";
-    public String gender = "default";
-    public String height = "default";
-    public String weight = "default";
-    public String country = "default";
-    public String city = "default";
-    public String postcode = "default";
-    public String street = "default";
-    public String insurance = "default";
+    public String age = "";
+    public String gender = "";
+    public String height = "";
+    public String weight = "";
+    public String country = "";
+    public String address = "";
+    public String insurance = "";
 
     public User() {
 

@@ -64,195 +64,174 @@
 
             <TextView
                 android:id="@+id/nameMain"
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageMainHeader" />
+                app:layout_constraintTop_toBottomOf="@id/imageMainHeader" />
 
-            <TextView
-                android:id="@+id/mailMainHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:text="Email: "
-                android:textColor="@color/denim"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameMain" />
-
-
-            <TextView
+            <EditText
                 android:id="@+id/mailMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/mailMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/mailMainHeader" />
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:drawablePadding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:ems="10"
+                android:background="@drawable/custom_input"
+                android:drawableStart="@drawable/custom_email_icon"
+                android:hint="Email Address"
+                android:inputType="textEmailAddress"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nameMain" />
 
-            <TextView
-                android:id="@+id/ageMainHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Age: "
-                android:textColor="@color/denim"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/mailMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/mailMain" />
-
-            <TextView
-                android:id="@+id/ageMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/ageMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/ageMainHeader" />
-
-            <TextView
-                android:id="@+id/genderMainHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Gender: "
-                android:textColor="@color/denim"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/ageMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/ageMain" />
-
-            <TextView
+            <EditText
                 android:id="@+id/genderMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/genderMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/genderMainHeader" />
-
-            <TextView
-                android:id="@+id/heightMainHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:drawablePadding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:text="Height: "
-                android:textColor="@color/denim"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/genderMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/genderMain" />
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:ems="10"
+                android:background="@drawable/custom_input"
+                android:drawableStart="@drawable/custom_height_icon"
+                android:hint="Gender"
+                android:inputType="text"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mailMain" />
 
-            <TextView
+            <EditText
+                android:id="@+id/birthdayMain"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:drawablePadding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:ems="10"
+                android:background="@drawable/custom_input"
+                android:drawableStart="@drawable/custom_date_icon"
+                android:hint="Birthday"
+                android:inputType="date"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/genderMain" />
+
+            <EditText
                 android:id="@+id/heightMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/heightMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/heightMainHeader" />
-
-            <TextView
-                android:id="@+id/weightMainHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:drawablePadding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:text="Weight: "
-                android:textColor="@color/denim"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/heightMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/heightMain" />
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:ems="10"
+                android:background="@drawable/custom_input"
+                android:drawableStart="@drawable/custom_height_icon"
+                android:hint="Height"
+                android:inputType="numberDecimal"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/birthdayMain" />
 
-            <TextView
+            <EditText
                 android:id="@+id/weightMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/weightMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/weightMainHeader" />
-
-            <TextView
-                android:id="@+id/countryMainHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:drawablePadding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:text="Country: "
-                android:textColor="@color/denim"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/weightMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/weightMain" />
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:ems="10"
+                android:background="@drawable/custom_input"
+                android:drawableStart="@drawable/custom_weight_icon"
+                android:hint="Weight"
+                android:inputType="numberDecimal"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/heightMain" />
 
-            <TextView
+            <EditText
                 android:id="@+id/countryMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/countryMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/countryMainHeader" />
-
-            <TextView
-                android:id="@+id/addressMainHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:drawablePadding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:text="Address: "
-                android:textColor="@color/denim"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/countryMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/countryMain" />
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:ems="10"
+                android:background="@drawable/custom_input"
+                android:drawableStart="@drawable/custom_country_icon"
+                android:hint="Country"
+                android:inputType="text"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/weightMain" />
 
-            <TextView
+            <EditText
                 android:id="@+id/addressMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/addressMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/addressMainHeader" />
-
-            <TextView
-                android:id="@+id/insuranceMainHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:drawablePadding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:text="Insurance: "
-                android:textColor="@color/denim"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/addressMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/addressMain" />
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:ems="10"
+                android:background="@drawable/custom_input"
+                android:drawableStart="@drawable/custom_address_icon"
+                android:hint="Address"
+                android:inputType="textPostalAddress"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/countryMain" />
 
-            <TextView
+            <EditText
                 android:id="@+id/insuranceMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/insuranceMainHeader"
-                app:layout_constraintTop_toBottomOf="@+id/insuranceMainHeader" />
-
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:drawablePadding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:ems="10"
+                android:background="@drawable/custom_input"
+                android:drawableStart="@drawable/custom_insurance_icon"
+                android:hint="Insurance"
+                android:inputType="text"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addressMain" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </ScrollView>
 

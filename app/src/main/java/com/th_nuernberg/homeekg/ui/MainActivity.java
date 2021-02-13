@@ -3,12 +3,10 @@ package com.th_nuernberg.homeekg.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final TextView welcomeTextView = (TextView) findViewById(R.id.welcomeMain);
         final TextView nameTextView = (TextView) findViewById(R.id.nameMain);
         final TextView mailTextView = (TextView) findViewById(R.id.mailMain);
-        final TextView ageTextView = (TextView) findViewById(R.id.ageMain);
+        final TextView ageTextView = (TextView) findViewById(R.id.birthdayMain);
         final TextView genderTextView = (TextView) findViewById(R.id.genderMain);
         final TextView heightTextView = (TextView) findViewById(R.id.heightMain);
         final TextView weightTextView = (TextView) findViewById(R.id.weightMain);
@@ -72,22 +70,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String age = userProfile.age;
                     String gender = userProfile.gender;
                     String height = userProfile.height;
-                    String weight= userProfile.weight;
-                    String country= userProfile.country;
-                    String city= userProfile.city;
-                    String postcode= userProfile.postcode;
-                    String street= userProfile.street;
+                    String weight = userProfile.weight;
+                    String country = userProfile.country;
+                    String address = userProfile.address;
                     String insurance= userProfile.insurance;
 
-                    welcomeTextView.setText("Willkommen zurück, " + name + "!");
+                    welcomeTextView.setText("Welcome back, " + name + "!");
                     nameTextView.setText(name);
                     mailTextView.setText(mail);
                     ageTextView.setText(age);
                     genderTextView.setText(gender);
-                    heightTextView.setText(height + "m");
-                    weightTextView.setText(weight + "kg");
+                    if(!height.equals("")) {
+                        heightTextView.setText(height + "m");
+                    }
+                    if(!weight.equals("")) {
+                        weightTextView.setText(weight + "kg");
+                    }
                     countryTextView.setText(country);
-                    addressTextView.setText(street + ", " + postcode + " " + city);
+                    addressTextView.setText(address);
                     insuranceTextView.setText(insurance);
                 }
             }
