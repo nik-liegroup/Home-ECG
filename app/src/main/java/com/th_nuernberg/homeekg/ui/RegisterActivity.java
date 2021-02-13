@@ -68,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mobile_reg = (EditText) findViewById(R.id.editTextMobileReg);
         password_reg = (EditText) findViewById(R.id.editTextPasswordLogin);
     }
+
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -78,19 +79,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class)
+                .putExtra("finish", true)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
+        finish();
+        super.onBackPressed();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ImageViewGoogleReg:
             case R.id.ImageViewBackReg:
             case R.id.TextViewHasAccReg:
-                startActivity(new Intent(this, LoginActivity.class));
-                overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class)
                         .putExtra("finish", true)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                                 Intent.FLAG_ACTIVITY_CLEAR_TASK |
                                 Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
                 finish();
                 break;
             case R.id.cirRegisterButtonReg:
@@ -152,14 +165,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()) {
-                                        Toast.makeText(RegisterActivity.this, "User has beeen registered succesfully", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                        Toast.makeText(RegisterActivity.this, "User has been registered successfully", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class)
+                                                .putExtra("finish", true)
+                                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
                                         overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
-                                        progress_bar_reg.setVisibility(View.INVISIBLE);
                                         finish();
                                     } else {
                                         progress_bar_reg.setVisibility(View.INVISIBLE);
-                                        Toast.makeText(RegisterActivity.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(RegisterActivity.this, "Registered, but database is corrupted!", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });

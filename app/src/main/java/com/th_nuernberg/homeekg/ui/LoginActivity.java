@@ -98,8 +98,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox =  preferences.getString("remember", "");
         if(checkbox.equals("true") && (mAuth.getCurrentUser() != null)) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class)
+                    .putExtra("finish", true)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
             finish();
         } else {
             Toast.makeText(this, "Please sign in!", Toast.LENGTH_SHORT).show();
@@ -193,8 +198,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //Method: updateUI
     private void updateUI(FirebaseUser user) {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class)
+                .putExtra("finish", true)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                        Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
         finish();
     }
 
@@ -248,8 +258,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(LoginActivity.this, "Auto Login unchecked", Toast.LENGTH_SHORT).show();
                         }
                         //Redirect to user profile
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class)
+                                .putExtra("finish", true)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                        Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
                         finish();
                     } else {
                         user.sendEmailVerification();

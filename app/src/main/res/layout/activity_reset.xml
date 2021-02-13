@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:layout_gravity="center"
-android:background="@color/login_bk_color"
-android:focusableInTouchMode="true"
-android:gravity="center"
-tools:context=".ui.ResetActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/login_bk_color"
+    android:focusableInTouchMode="true"
+    android:gravity="center"
+    tools:context=".ui.ResetActivity">
 
 
 <ScrollView
@@ -32,7 +32,7 @@ tools:context=".ui.ResetActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="163dp">
 
             <ImageView
                 android:id="@+id/imageViewLoginIcon"
@@ -56,23 +56,26 @@ tools:context=".ui.ResetActivity">
             android:id="@+id/forgot_password_text"
             style="@style/viewParent.headerText.NoMode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="97dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_weight="1"
-            android:text="Dont worry! Just fill in your email and we we'll send you a link to reset your password."
+            android:text="Don't worry! Just fill in your email and we we'll send you a link to reset your password."
             android:textAlignment="center"
             android:textSize="20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputEmailResetLayout"
             style="@style/parent"
+            android:layout_marginTop="@dimen/loginViewsMargin"
             app:boxBackgroundColor="@color/white"
-            android:layout_marginTop="@dimen/loginViewsMargin">
+            app:boxStrokeColor="#FFFFFF">
 
             <EditText
                 android:id="@+id/editTextEmailReset"
                 style="@style/modifiedEditText"
+                android:layout_height="48dp"
+                android:backgroundTint="#F4F4F4"
                 android:hint="@string/login_email_hint"
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
@@ -126,7 +129,7 @@ tools:context=".ui.ResetActivity">
                 android:layout_width="244dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
-                android:text="Have you tried logging in through the following services?"
+                android:text="Use other Methods"
                 android:textAlignment="center"
                 android:textSize="14sp" />
 
@@ -160,12 +163,6 @@ tools:context=".ui.ResetActivity">
 
     </LinearLayout>
 </ScrollView>
-
-<View
-    android:layout_width="11dp"
-    android:layout_height="match_parent"
-    android:layout_alignParentRight="true"
-    android:background="@drawable/ic_side" />
 
     <ProgressBar
         android:id="@+id/progressBarForgot"
