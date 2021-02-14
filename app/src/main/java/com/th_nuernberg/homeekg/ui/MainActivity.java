@@ -3,10 +3,12 @@ package com.th_nuernberg.homeekg.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +17,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +33,7 @@ import com.th_nuernberg.homeekg.login.User;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Attributes and Constants
-    private Button bluetooth_monitor;
+    private Button bluetooth_monitor, update_Main;
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
@@ -42,32 +48,131 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setTitle("Home EKG");
 
+        //Authentication
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("users");
         userID = user.getUid();
 
-        bluetooth_monitor = (Button) findViewById(R.id.startScanningMonitor);
-        bluetooth_monitor.setOnClickListener(this);
-
+        //TextView
         final TextView welcomeTextView = (TextView) findViewById(R.id.welcomeMain);
         final TextView nameTextView = (TextView) findViewById(R.id.nameMain);
-        final TextView mailTextView = (TextView) findViewById(R.id.mailMain);
-        final TextView ageTextView = (TextView) findViewById(R.id.birthdayMain);
-        final TextView genderTextView = (TextView) findViewById(R.id.genderMain);
-        final TextView heightTextView = (TextView) findViewById(R.id.heightMain);
-        final TextView weightTextView = (TextView) findViewById(R.id.weightMain);
-        final TextView countryTextView = (TextView) findViewById(R.id.countryMain);
-        final TextView addressTextView = (TextView) findViewById(R.id.addressMain);
-        final TextView insuranceTextView = (TextView) findViewById(R.id.insuranceMain);
 
-        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        //EditText
+        final EditText mailEditText = (EditText) findViewById(R.id.mailMain);
+        final EditText birthdayEditText = (EditText) findViewById(R.id.birthdayMain);
+        final EditText genderEditText = (EditText) findViewById(R.id.genderMain);
+        final EditText heightEditText = (EditText) findViewById(R.id.heightMain);
+        final EditText weightEditText = (EditText) findViewById(R.id.weightMain);
+        final EditText countryEditText = (EditText) findViewById(R.id.countryMain);
+        final EditText addressEditText = (EditText) findViewById(R.id.addressMain);
+        final EditText insuranceEditText = (EditText) findViewById(R.id.insuranceMain);
+
+        bluetooth_monitor = (Button) findViewById(R.id.startScanningMonitor);
+        update_Main = (Button) findViewById(R.id.updateButtonMain);
+
+        bluetooth_monitor.setOnClickListener(this);
+        update_Main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User user = new User();
+                user.mail = mailEditText.getText().toString().trim();
+                user.birthday = birthdayEditText.getText().toString().trim();
+                user.gender = genderEditText.getText().toString().trim();
+                user.height = heightEditText.getText().toString().trim().replaceAll("[^0-9]", "");
+                user.weight = weightEditText.getText().toString().trim().replaceAll("[^0-9]", "");
+                user.country = countryEditText.getText().toString().trim();
+                user.address = addressEditText.getText().toString().trim();
+                user.insurance = insuranceEditText.getText().toString().trim();
+                //Update DataBase
+                reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User userLocalProfile = snapshot.getValue(User.class);
+                        if(userLocalProfile != null) {
+                            if(!userLocalProfile.mail.equals(user.mail)) {
+                                reference.child(userID).child("mail").setValue(user.mail).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(MainActivity.this, "Email has not been changed", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                            if(!userLocalProfile.birthday.equals(user.birthday)) {
+                                reference.child(userID).child("birthday").setValue(user.birthday).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(MainActivity.this, "Birthday has not been changed", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            if(!userLocalProfile.gender.equals(user.gender)) {
+                                reference.child(userID).child("gender").setValue(user.gender).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(MainActivity.this, "Gender has not been changed", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            if(!userLocalProfile.height.equals(user.height)) {
+                                reference.child(userID).child("height").setValue(user.height).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(MainActivity.this, "Height has not been changed", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            if(!userLocalProfile.weight.equals(user.weight)) {
+                                reference.child(userID).child("weight").setValue(user.weight).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(MainActivity.this, "Weight has not been changed", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            if(!userLocalProfile.country.equals(user.country)) {
+                                reference.child(userID).child("country").setValue(user.country).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(MainActivity.this, "Country has not been changed", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            if(!userLocalProfile.address.equals(user.address)) {
+                                reference.child(userID).child("address").setValue(user.address).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(MainActivity.this, "Address has not been changed", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            if(!userLocalProfile.insurance.equals(user.insurance)) {
+                                reference.child(userID).child("insurance").setValue(user.insurance).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(MainActivity.this, "Insurance has not been changed", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(MainActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+        });
+
+        reference.child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
                 if(userProfile != null) {
                     String name = userProfile.name;
                     String mail = userProfile.mail;
-                    String age = userProfile.age;
+                    String age = userProfile.birthday;
                     String gender = userProfile.gender;
                     String height = userProfile.height;
                     String weight = userProfile.weight;
@@ -77,18 +182,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     welcomeTextView.setText("Welcome back, " + name + "!");
                     nameTextView.setText(name);
-                    mailTextView.setText(mail);
-                    ageTextView.setText(age);
-                    genderTextView.setText(gender);
+                    mailEditText.setText(mail);
+                    birthdayEditText.setText(age);
+                    genderEditText.setText(gender);
                     if(!height.equals("")) {
-                        heightTextView.setText(height + "m");
+                        heightEditText.setText(height + "cm");
                     }
                     if(!weight.equals("")) {
-                        weightTextView.setText(weight + "kg");
+                        weightEditText.setText(weight + "kg");
                     }
-                    countryTextView.setText(country);
-                    addressTextView.setText(address);
-                    insuranceTextView.setText(insurance);
+                    countryEditText.setText(country);
+                    addressEditText.setText(address);
+                    insuranceEditText.setText(insurance);
                 }
             }
 

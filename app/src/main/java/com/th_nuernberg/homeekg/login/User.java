@@ -8,7 +8,7 @@ public class User {
     public String mobile = "";
 
     //Additional personal information
-    public String age = "";
+    public String birthday = "";
     public String gender = "";
     public String height = "";
     public String weight = "";
