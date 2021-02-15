@@ -32,11 +32,16 @@
     <string name="alr_acc">Home\nEKG\nLogin</string>
     <string name="logout_dialog_message">Do you really want to log out?</string>
     <string name="logout_dialog_title">Logout</string>
+    <string name="delete_dialog_message">Do you really want to delete your account?</string>
+    <string name="delete_dialog_title">Delete Account</string>
     <string name="logout_ok">Ok</string>
     <string name="logout_cancel">Cancel</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="login_remember">Remember me</string>
     <string name="logout_forgot">Forgot Password?</string>
+    <string name="logout_forgot_settings">Reset Password</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="logout_account">Logout of Account</string>
 
     !-- Strings used for Bluetooth -->
     <string name="screen_title_bluetooth">Device List</string>
