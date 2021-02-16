@@ -13,7 +13,6 @@
     <!-- Permissions Bluetooth -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -61,13 +60,6 @@
         <activity android:name=".bluetooth_classic.SignalActivity" />
 
         <!-- Bluetooth Activity -->
-        <activity android:name=".bluetooth_classic.BluetoothActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.BT1" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
     </application>
 

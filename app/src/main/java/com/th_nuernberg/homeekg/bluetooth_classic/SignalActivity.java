@@ -3,8 +3,6 @@ package com.th_nuernberg.homeekg.bluetooth_classic;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothSocket;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -12,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -69,7 +66,7 @@ public class SignalActivity extends Activity implements View.OnClickListener{
         background.setBackgroundColor(Color.BLACK);
 
         //Set Handler
-        BluetoothActivity.gethandler(mHandler);
+        BluetoothListActivity.gethandler(mHandler);
 
         //Initialize GraphView
         GraphView = (LinearLayout) findViewById(R.id.Graph);
@@ -125,14 +122,14 @@ public class SignalActivity extends Activity implements View.OnClickListener{
 
             //Handle different messages
             switch(msg.what){
-                case BluetoothActivity.SUCCESS_CONNECT:
-                    BluetoothActivity.connectedThread = new BluetoothActivity.ConnectedThread((BluetoothSocket)msg.obj);
+                case BluetoothListActivity.SUCCESS_CONNECT:
+                    BluetoothListActivity.connectedThread = new BluetoothListActivity.ConnectedThread((BluetoothSocket)msg.obj);
                     Toast.makeText(getApplicationContext(), "Connected!", Toast.LENGTH_SHORT).show();
                     String s = "successfully connected";
-                    BluetoothActivity.connectedThread.start();
+                    BluetoothListActivity.connectedThread.start();
                     break;
 
-                case BluetoothActivity.MESSAGE_READ:
+                case BluetoothListActivity.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     String strIncom = new String(readBuf, 0, 5);
 
@@ -182,7 +179,7 @@ public class SignalActivity extends Activity implements View.OnClickListener{
                 break;
 
             case R.id.bDisconnect:
-                BluetoothActivity.disconnect();
+                BluetoothListActivity.disconnect();
                 break;
 
             case R.id.bXminus:
@@ -211,11 +208,11 @@ public class SignalActivity extends Activity implements View.OnClickListener{
 
             case R.id.tbStream:
                 if (tbStream.isChecked()){
-                    if (BluetoothActivity.connectedThread != null)
-                        BluetoothActivity.connectedThread.write("E");
+                    if (BluetoothListActivity.connectedThread != null)
+                        BluetoothListActivity.connectedThread.write("E");
                 } else {
-                    if (BluetoothActivity.connectedThread != null)
-                        BluetoothActivity.connectedThread.write("Q");
+                    if (BluetoothListActivity.connectedThread != null)
+                        BluetoothListActivity.connectedThread.write("Q");
                 }
                 break;
         }
@@ -224,9 +221,9 @@ public class SignalActivity extends Activity implements View.OnClickListener{
     @Override
     public void onBackPressed() {
         // TODO Auto-generated method stub
-        if (BluetoothActivity.connectedThread != null) {
+        if (BluetoothListActivity.connectedThread != null) {
             //Stop streaming
-            BluetoothActivity.connectedThread.write("Q");
+            BluetoothListActivity.connectedThread.write("Q");
         }
         super.onBackPressed();
     }
