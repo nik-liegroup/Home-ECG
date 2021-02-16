@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.th_nuernberg.homeekg">
     <!-- Permissions Login and Registration -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -7,10 +8,9 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Features -->
-    <uses-feature
-        android:name="android.hardware.bluetooth_le"
-        android:required="false" /> <!-- Permissions Bluetooth -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- Permissions Bluetooth -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -22,18 +22,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeEKG.NoActionBar">
-        <activity android:name=".ui.SettingsActivity"></activity>
+
         <!-- Activities -->
         <!-- Main Activity -->
-        <activity android:name=".ui.MainActivity" /> <!-- Scanner Activity -->
-        <activity
-            android:name=".ui.ScannerActivity"
-            android:parentActivityName=".ui.MainActivity" /> <!-- Monitor Activity -->
-        <activity
-            android:name=".ui.MonitorActivity"
-            android:label="@string/app_name"
-            android:parentActivityName=".ui.ScannerActivity"
-            android:screenOrientation="portrait" /> <!-- Login Activity -->
+        <activity android:name=".ui.MainActivity" />
+
+        <!-- Login Activity -->
         <activity
             android:name=".ui.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -42,20 +36,39 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Registration Activity -->
+        </activity>
+
+        <!-- Registration Activity -->
         <activity
             android:name=".ui.RegisterActivity"
             android:parentActivityName=".ui.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- Reset Activity -->
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <!-- Reset Activity -->
         <activity
             android:name=".ui.ResetActivity"
-            android:parentActivityName=".ui.ResetActivity" /> <!-- About Activity -->
+            android:parentActivityName=".ui.ResetActivity" />
+
+        <!-- About Activity -->
         <activity
             android:name=".ui.AboutActivity"
-            android:parentActivityName=".ui.MainActivity" /> <!-- Bluetooth Adapter Service Service -->
-        <service
-            android:name=".bluetooth.BluetoothAdapterService"
-            android:enabled="true" />
+            android:parentActivityName=".ui.MainActivity" />
+
+        <!-- Settings Activity -->
+        <activity android:name=".ui.SettingsActivity" />
+
+        <!-- Signal Activity -->
+        <activity android:name=".bluetooth_classic.SignalActivity" />
+
+        <!-- Bluetooth Activity -->
+        <activity android:name=".bluetooth_classic.BluetoothActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.BT1" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

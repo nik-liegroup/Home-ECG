@@ -35,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.th_nuernberg.homeekg.R;
+import com.th_nuernberg.homeekg.bluetooth_classic.SignalActivity;
 import com.th_nuernberg.homeekg.login.User;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -240,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.startScanningMonitor:
-                startActivity(new Intent(this, ScannerActivity.class));
+                startActivity(new Intent(this, SignalActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
                 break;
             case R.id.buttonMainHeaderEdit:
