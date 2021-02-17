@@ -116,18 +116,32 @@ public class SignalActivity extends Activity implements View.OnClickListener {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                byte i[] = new byte[6];
+                byte i[] = new byte[20];
                 i[0] = 50;
                 i[1] = 49;
                 i[2] = 57;
                 i[3] = 55;
                 i[4] = 13;
                 i[5] = 10;
+                i[6] = 44;  //Comma
+                i[7] = 50;
+                i[8] = 49;
+                i[9] = 57;
+                i[10] = 55;
+                i[11] = 13;
+                i[12] = 10;
+                i[13] = 44;  //Comma
+                i[14] = 50;
+                i[15] = 49;
+                i[16] = 57;
+                i[17] = 55;
+                i[18] = 13;
+                i[19] = 10;
 
                 while (true) {
                     try {
                         try {
-                            sleep(4);
+                            sleep(12);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -164,7 +178,11 @@ public class SignalActivity extends Activity implements View.OnClickListener {
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     int numBytes = (int) msg.arg1;
-                    //TODO Edit Further Processing Of Incoming Stream
+
+                    //TODO DEBUG
+                    numBytes = 20;
+                    //TODO DEBUG
+
                     String incomeString = new String(readBuf, 0, 20);
                     Log.d("Incoming String Value", incomeString);
                     Log.d("Incoming String Length", Integer.toString(numBytes));
@@ -182,7 +200,7 @@ public class SignalActivity extends Activity implements View.OnClickListener {
                                 Series.appendData(new GraphViewData(graphLastXValue,
                                         yValue), AutoScrollX);
                             } else {
-                                Log.d("Corrupted Bytes", incomeString);
+                                Log.d("Corrupted Bytes", Integer.toString(yValue));
                             }
 
                             //X-Axis Control
