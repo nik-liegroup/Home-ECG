@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.github.mikephil.charting.components.Legend;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphView.LegendAlign;
@@ -38,12 +39,11 @@ public class SignalActivity extends Activity implements View.OnClickListener {
 
     //Buttons
     Button bConnect, bDisconnect, bxMinus, bxPlus;
-    ToggleButton tbLock;
-    ToggleButton tbScroll;
-    ToggleButton tbStream;
+    ToggleButton tbLock, tbScroll, tbStream, darkMode;
 
     //GraphView
     static LinearLayout GraphView;
+    LinearLayout background;
     static GraphView graphView;
     static GraphViewSeries Series;
     private static double graphLastXValue = 0;
@@ -65,8 +65,8 @@ public class SignalActivity extends Activity implements View.OnClickListener {
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_signal);
 
-        //TODO LinearLayout background = (LinearLayout) findViewById(R.id.bg);
-        //TODO Black Mode: background.setBackgroundColor(Color.BLACK);
+        background = (LinearLayout) findViewById(R.id.bg);
+        background.setBackgroundColor(Color.WHITE);
 
         //Set Handler
         BluetoothListActivity.setHandler(mHandler);
@@ -82,9 +82,6 @@ public class SignalActivity extends Activity implements View.OnClickListener {
         graphView.setViewPort(0, xView);
         graphView.setScrollable(true);
         graphView.setScalable(true);
-        //TODO Legend Bug Fix
-        //graphView.setShowLegend(true);
-        //graphView.setLegendAlign(LegendAlign.MIDDLE);
         graphView.setManualYAxis(true);
         graphView.setManualYAxisBounds(4095, 0);
         graphView.addSeries(Series);
@@ -112,6 +109,9 @@ public class SignalActivity extends Activity implements View.OnClickListener {
         tbStream = (ToggleButton)findViewById(R.id.tbStream);
         tbStream.setOnClickListener(this);
 
+        darkMode = (ToggleButton)findViewById(R.id.darkMode);
+        darkMode.setOnClickListener(this);
+
         //TODO DEBUG GRAPH
         Thread thread = new Thread() {
             @Override
@@ -125,8 +125,8 @@ public class SignalActivity extends Activity implements View.OnClickListener {
                 i[5] = 10;
                 i[6] = 44;  //Comma
                 i[7] = 50;
-                i[8] = 49;
-                i[9] = 57;
+                i[8] = 57;
+                i[9] = 49;
                 i[10] = 55;
                 i[11] = 13;
                 i[12] = 10;
@@ -141,7 +141,7 @@ public class SignalActivity extends Activity implements View.OnClickListener {
                 while (true) {
                     try {
                         try {
-                            sleep(12);
+                            sleep(516);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -251,13 +251,13 @@ public class SignalActivity extends Activity implements View.OnClickListener {
                 if (tbStream.isChecked()){
                     if (BluetoothListActivity.connectedThread != null) {
                         byte[] message = new byte[1];
-                        message[0] = 0;
+                        message[0] = 1;
                         BluetoothListActivity.connectedThread.write(message);
                     }
                 } else {
                     if (BluetoothListActivity.connectedThread != null) {
                         byte[] message = new byte[1];
-                        message[0] = 1;
+                        message[0] = 0;
                         BluetoothListActivity.connectedThread.write(message);
                     }
                 }
@@ -276,6 +276,14 @@ public class SignalActivity extends Activity implements View.OnClickListener {
                     Lock = true;
                 } else {
                     Lock = false;
+                }
+                break;
+
+            case R.id.darkMode:
+                if (darkMode.isChecked()){
+                    background.setBackgroundColor(Color.BLACK);
+                } else {
+                    background.setBackgroundColor(Color.WHITE);
                 }
                 break;
 

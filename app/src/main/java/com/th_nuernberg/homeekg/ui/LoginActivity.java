@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Intent.FLAG_ACTIVITY_CLEAR_TASK |
                             Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
             finish();
         } else {
             Toast.makeText(this, "Please sign in!", Toast.LENGTH_SHORT).show();
@@ -204,7 +204,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Intent.FLAG_ACTIVITY_CLEAR_TASK |
                         Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
         finish();
     }
 
@@ -264,7 +264,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK |
                                         Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.stay);
                         finish();
                     } else {
                         user.sendEmailVerification();
