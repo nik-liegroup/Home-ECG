@@ -1,117 +1,143 @@
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:keepScreenOn="true"
-    android:orientation="horizontal"
-    android:weightSum="100" >
+    tools:context=".bluetooth_classic.SignalActivity">
 
     <LinearLayout
-        android:id="@+id/Graph"
-        android:layout_width="fill_parent"
+        android:id="@+id/bg"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="15"
-        android:orientation="horizontal"/>
-
-    <LinearLayout
-        android:id="@+id/LL2"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="85"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/tvBluetooth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="Bluetooth"
-            android:textSize="15dp"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:id="@+id/bConnect"
-            android:layout_width="fill_parent"
-            android:layout_height="30dp"
-            android:text="Connect"
-            android:textSize="10dp"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:id="@+id/bDisconnect"
-            android:layout_width="fill_parent"
-            android:layout_height="30dp"
-            android:text="Disconnect"
-            android:textSize="10dp"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/tvControl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="Control"
-            android:textSize="15dp"
-            android:textColor="@color/white" />
-
-        <ToggleButton
-            android:id="@+id/tbStream"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:checked="false"
-            android:textOff="Start Stream"
-            android:textOn="Start Stream"
-            android:textColor="@color/white"/>
-
-        <ToggleButton
-            android:id="@+id/tbScroll"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:checked="true"
-            android:textOff="Auto Scroll X"
-            android:textOn="Auto Scroll X"
-            android:textColor="@color/white" />
-
-        <ToggleButton
-            android:id="@+id/tbLock"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:checked="true"
-            android:textOff="Lock    Xaxis"
-            android:textOn="Lock    Xaxis"
-            android:textColor="@color/white" />
+        android:keepScreenOn="true"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/LLX"
+            android:id="@+id/Graph"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            android:weightSum="100" >
+            android:layout_height="match_parent"
+            android:layout_weight="15"
+            android:paddingLeft="10dp"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/LL2"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="85"
+            android:paddingRight="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvBluetooth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:paddingTop="5dp"
+                android:text="Bluetooth"
+                android:textSize="15sp"
+                android:textColor="@color/denim"/>
 
             <Button
-                android:id="@+id/bXminus"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_weight="50"
-                android:text="-"
-                android:textSize="12dp"
+                android:id="@+id/bConnect"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Connect"
+                android:textSize="10sp"
                 android:textColor="@color/white"/>
 
             <Button
-                android:id="@+id/bXplus"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_weight="50"
-                android:text="+"
-                android:textSize="12dp"
+                android:id="@+id/bDisconnect"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Disconnect"
+                android:textSize="10sp"
                 android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvControl"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Control"
+                android:textSize="15sp"
+                android:textColor="@color/denim" />
+
+            <ToggleButton
+                android:id="@+id/tbStream"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:checked="false"
+                android:textOff="Start Stream"
+                android:textOn="Stop Stream"
+                android:textSize="10sp"
+                android:textColor="@color/white"/>
+
+            <ToggleButton
+                android:id="@+id/tbScroll"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:checked="true"
+                android:textOff="Auto Scroll"
+                android:textOn="Auto Scroll"
+                android:textSize="10sp"
+                android:textColor="@color/white" />
+
+            <ToggleButton
+                android:id="@+id/tbLock"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:checked="true"
+                android:textOff="Axis Unlocked"
+                android:textOn="Axis Locked"
+                android:textSize="10sp"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:id="@+id/LLX"
+                android:layout_width="fill_parent"
+                android:layout_height="35dp"
+                android:weightSum="100" >
+
+                <Button
+                    android:id="@+id/xMinus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_weight="50"
+                    android:text="-"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"/>
+
+                <Button
+                    android:id="@+id/xPlus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:text="+"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
         </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+

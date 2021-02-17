@@ -1,6 +1,5 @@
 package com.th_nuernberg.homeekg.bluetooth_classic;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
@@ -25,20 +24,19 @@ import com.jjoe64.graphview.GraphView.LegendAlign;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.LineGraphView;
-import com.th_nuernberg.homeekg.Constants;
 import com.th_nuernberg.homeekg.R;
 
 import static com.th_nuernberg.homeekg.Constants.*;
 
 public class SignalActivity extends Activity implements View.OnClickListener {
 
-    //Toggle Buttons Status Variables
-    static boolean Lock;
-    static boolean AutoScrollX;
-    static boolean Stream;
+    //***Variables and Constants***//
+    static boolean Lock = true;
+    static boolean AutoScrollX = true;
+    static boolean Stream = true;
 
-    //Buttons and ToggleButtons
-    Button bConnect, bDisconnect, bXminus, bXplus;
+    //Buttons
+    Button bConnect, bDisconnect, bxMinus, bxPlus;
     ToggleButton tbLock;
     ToggleButton tbScroll;
     ToggleButton tbStream;
@@ -47,48 +45,48 @@ public class SignalActivity extends Activity implements View.OnClickListener {
     static LinearLayout GraphView;
     static GraphView graphView;
     static GraphViewSeries Series;
-    private static double graph2LastXValue = 0;
-    private static int Xview = 10;
+    private static double graphLastXValue = 0;
 
+    //TODO xAxis Bug Fix
+    private static int xView = 10;
+
+
+    //***Methods***//
+    //onCreate
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Set Orientation Landscape
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-        //Hide title
+        //Layout Setup
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        //Hide Status bar
         this.getWindow().setFlags(WindowManager.LayoutParams.
                 FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_signal);
 
-        //Set Background Color
-        LinearLayout background = (LinearLayout) findViewById(R.id.bg);
-        background.setBackgroundColor(Color.BLACK);
+        //TODO LinearLayout background = (LinearLayout) findViewById(R.id.bg);
+        //TODO Black Mode: background.setBackgroundColor(Color.BLACK);
 
         //Set Handler
         BluetoothListActivity.setHandler(mHandler);
 
         //Initialize GraphView
         GraphView = (LinearLayout) findViewById(R.id.Graph);
-        Series = new GraphViewSeries("Signal",
+        Series = new GraphViewSeries("EKG Signal",
                 //Color and thickness of the line
                 new GraphViewSeriesStyle(Color.YELLOW, 2),
                 new GraphViewData[] {new GraphViewData(0, 0)});
 
-        graphView = new LineGraphView(this, "Graph");
-        graphView.setViewPort(0, Xview);
+        graphView = new LineGraphView(this, "");
+        graphView.setViewPort(0, xView);
         graphView.setScrollable(true);
         graphView.setScalable(true);
-        graphView.setShowLegend(true);
-        graphView.setLegendAlign(LegendAlign.BOTTOM);
+        //TODO Legend Bug Fix
+        //graphView.setShowLegend(true);
+        //graphView.setLegendAlign(LegendAlign.MIDDLE);
         graphView.setManualYAxis(true);
         graphView.setManualYAxisBounds(5, 0);
-        graphView.addSeries(Series); // data
+        graphView.addSeries(Series);
         GraphView.addView(graphView);
 
         //Initialize Buttons
@@ -98,11 +96,11 @@ public class SignalActivity extends Activity implements View.OnClickListener {
         bDisconnect = (Button)findViewById(R.id.bDisconnect);
         bDisconnect.setOnClickListener(this);
 
-        bXminus = (Button)findViewById(R.id.bXminus);
-        bXminus.setOnClickListener(this);
+        bxMinus = (Button)findViewById(R.id.xMinus);
+        bxMinus.setOnClickListener(this);
 
-        bXplus = (Button)findViewById(R.id.bXplus);
-        bXplus.setOnClickListener(this);
+        bxPlus = (Button)findViewById(R.id.xPlus);
+        bxPlus.setOnClickListener(this);
 
         tbLock = (ToggleButton)findViewById(R.id.tbLock);
         tbLock.setOnClickListener(this);
@@ -112,48 +110,49 @@ public class SignalActivity extends Activity implements View.OnClickListener {
 
         tbStream = (ToggleButton)findViewById(R.id.tbStream);
         tbStream.setOnClickListener(this);
-
-        Lock = true;
-        AutoScrollX = true;
-        Stream = true;
     }
 
+    //Handler
     Handler mHandler = new Handler(Looper.myLooper()){
         @Override
         public void handleMessage(Message msg) {
-            // TODO Auto-generated method stub
             super.handleMessage(msg);
 
-            //Handle different messages
             switch(msg.what){
                 case SUCCESS_CONNECT:
-                    BluetoothListActivity.connectedThread = new BluetoothListActivity.ConnectedThread((BluetoothSocket)msg.obj);
-                    Toast.makeText(getApplicationContext(), "Connected!", Toast.LENGTH_SHORT).show();
-                    String s = "successfully connected";
+                    BluetoothListActivity.connectedThread =
+                            new BluetoothListActivity.ConnectedThread((BluetoothSocket) msg.obj);
+                    Toast.makeText(getApplicationContext(),
+                            "Connected!", Toast.LENGTH_SHORT).show();
                     BluetoothListActivity.connectedThread.start();
                     break;
 
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
-                    String strIncom = new String(readBuf, 0, 5);
 
-                    Log.d("strIncom", strIncom);
-                    if (strIncom.indexOf('.')==2 && strIncom.indexOf('s')==0){
-                        strIncom = strIncom.replace("s", "");
-                        if (isFloatNumber(strIncom)){
-                            Series.appendData(new GraphViewData(graph2LastXValue,Double.parseDouble(strIncom)),AutoScrollX);
+                    //TODO Edit Further Processing Of Incoming Stream
+                    String incomeString = new String(readBuf, 0, 5);
 
-                            //X-axis control
-                            if (graph2LastXValue >= Xview && Lock == true){
+                    Log.d("Incoming String", incomeString);
+                    if (incomeString.indexOf('.') == 2 && incomeString.indexOf('s') == 0){
+                        incomeString = incomeString.replace("s", "");
+                        if (isFloatNumber(incomeString)){
+                            Series.appendData(new GraphViewData(graphLastXValue,
+                                    Double.parseDouble(incomeString)), AutoScrollX);
+
+                            //X-Axis Control
+                            if (graphLastXValue >= xView && Lock == true){
                                 Series.resetData(new GraphViewData[] {});
-                                graph2LastXValue = 0;
+                                graphLastXValue = 0;
                             }
-                            else graph2LastXValue += 0.1;
+
+                            //TODO Set True Value
+                            else graphLastXValue += 0.1;
 
                             if(Lock == true)
-                                graphView.setViewPort(0, Xview);
+                                graphView.setViewPort(0, xView);
                             else
-                                graphView.setViewPort(graph2LastXValue-Xview, Xview);
+                                graphView.setViewPort(graphLastXValue - xView, xView);
 
                             //Update
                             GraphView.removeView(graphView);
@@ -174,31 +173,31 @@ public class SignalActivity extends Activity implements View.OnClickListener {
         }
     };
 
+    //onClick
     @Override
     public void onClick(View v) {
-        // TODO Auto-generated method stub
         switch(v.getId()){
             case R.id.bConnect:
                 startActivity(new Intent(this, BluetoothListActivity.class));
                 break;
 
             case R.id.bDisconnect:
-                BluetoothListActivity.disconnect();
+                BluetoothListActivity.disconnect(this);
                 break;
 
-            case R.id.bXminus:
-                if (Xview>1) Xview--;
-                break;
-
-            case R.id.bXplus:
-                if (Xview<30) Xview++;
-                break;
-
-            case R.id.tbLock:
-                if (tbLock.isChecked()){
-                    Lock = true;
+            case R.id.tbStream:
+                if (tbStream.isChecked()){
+                    if (BluetoothListActivity.connectedThread != null) {
+                        byte[] message = new byte[1];
+                        message[0] = 0;
+                        BluetoothListActivity.connectedThread.write(message);
+                    }
                 } else {
-                    Lock = false;
+                    if (BluetoothListActivity.connectedThread != null) {
+                        byte[] message = new byte[1];
+                        message[0] = 1;
+                        BluetoothListActivity.connectedThread.write(message);
+                    }
                 }
                 break;
 
@@ -210,31 +209,31 @@ public class SignalActivity extends Activity implements View.OnClickListener {
                 }
                 break;
 
-            case R.id.tbStream:
-                if (tbStream.isChecked()){
-                    if (BluetoothListActivity.connectedThread != null) {
-                        //TODO
-                        //BluetoothListActivity.connectedThread.write("E");
-                    }
-
+            case R.id.tbLock:
+                if (tbLock.isChecked()){
+                    Lock = true;
                 } else {
-                    if (BluetoothListActivity.connectedThread != null) {
-                        //TODO
-                        //BluetoothListActivity.connectedThread.write("Q");
-                    }
-
+                    Lock = false;
                 }
+                break;
+
+            case R.id.xMinus:
+                if (xView > 1) xView--;
+                break;
+
+            case R.id.xPlus:
+                if (xView < 30) xView++;
                 break;
         }
     }
 
+    //onBackPressed
     @Override
     public void onBackPressed() {
-        // TODO Auto-generated method stub
         if (BluetoothListActivity.connectedThread != null) {
-            //Stop streaming
-            //TODO
-            //BluetoothListActivity.connectedThread.write("Q");
+            byte[] message = new byte[1];
+            message[0] = 0;
+            BluetoothListActivity.connectedThread.write(message);
         }
         super.onBackPressed();
     }
