@@ -378,14 +378,14 @@ public class BluetoothListActivity extends Activity {
         }
 
         public void run() {
-            mmBuffer = new byte[6];
+            mmBuffer = new byte[20];
             int numBytes;
 
             // Keep listening to the InputStream until an exception occurs.
             while (true) {
                 try {
                     try {
-                        sleep(4);
+                        sleep(12);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

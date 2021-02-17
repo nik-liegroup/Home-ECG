@@ -142,7 +142,7 @@ public class SignalActivity extends Activity implements View.OnClickListener {
                 }
             }
         };
-        //thread.start();
+        thread.start();
         //TODO DEBUG GRAPH
     }
 
@@ -165,15 +165,25 @@ public class SignalActivity extends Activity implements View.OnClickListener {
                     byte[] readBuf = (byte[]) msg.obj;
                     int numBytes = (int) msg.arg1;
                     //TODO Edit Further Processing Of Incoming Stream
-                    String incomeString = new String(readBuf, 0, 6);
-
+                    String incomeString = new String(readBuf, 0, 20);
                     Log.d("Incoming String Value", incomeString);
-                        incomeString = incomeString.replace("\r", "")
-                                .replace("\n", "");
-                        if (isIntegerNumber(incomeString)){
-                            Log.d("Incoming String Length", Integer.toString(numBytes));
-                            Series.appendData(new GraphViewData(graphLastXValue,
-                                    Integer.parseInt(incomeString)), AutoScrollX);
+                    Log.d("Incoming String Length", Integer.toString(numBytes));
+
+                    incomeString = incomeString.replace("\r", "")
+                            .replace("\n", "");
+
+                    String[] string_parts = incomeString.split(",", 3);
+
+                    for(int i = 0; i<3; i++) {
+                        if (isIntegerNumber(string_parts[i])){
+                            int yValue = Integer.parseInt(string_parts[i]);
+
+                            if((yValue>0) && (yValue<4096) && (numBytes==20)) {
+                                Series.appendData(new GraphViewData(graphLastXValue,
+                                        yValue), AutoScrollX);
+                            } else {
+                                Log.d("Corrupted Bytes", incomeString);
+                            }
 
                             //X-Axis Control
                             if (graphLastXValue >= xView && Lock == true){
@@ -188,12 +198,12 @@ public class SignalActivity extends Activity implements View.OnClickListener {
                                 graphView.setViewPort(0, xView);
                             else
                                 graphView.setViewPort(graphLastXValue - xView, xView);
-
-                            //Update
-                            GraphView.removeView(graphView);
-                            GraphView.addView(graphView);
-                        }
-                    break;
+                    }
+                    //Update
+                    GraphView.removeView(graphView);
+                    GraphView.addView(graphView);
+                    }
+                break;
             }
         }
 
