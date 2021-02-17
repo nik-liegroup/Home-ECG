@@ -46,7 +46,7 @@
     !-- Strings used for Bluetooth -->
     <string name="screen_title_bluetooth">Device List</string>
     <string name="action_settings_bluetooth">Settings</string>
-    <string name="start_scanning">Connect to EKG device</string>
+    <string name="start_scanning">Connect to EKG</string>
     <string name="bpm">BPM</string>
 
     <!-- Merge -->

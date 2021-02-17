@@ -59,7 +59,8 @@
         <!-- Signal Activity -->
         <activity android:name=".bluetooth_classic.SignalActivity" />
 
-        <!-- Bluetooth Activity -->
+        <!-- Bluetooth List Activity -->
+        <activity android:name=".bluetooth_classic.BluetoothListActivity" />
 
     </application>
 

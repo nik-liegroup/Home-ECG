@@ -8,6 +8,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
@@ -24,9 +25,12 @@ import com.jjoe64.graphview.GraphView.LegendAlign;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.LineGraphView;
+import com.th_nuernberg.homeekg.Constants;
 import com.th_nuernberg.homeekg.R;
 
-public class SignalActivity extends Activity implements View.OnClickListener{
+import static com.th_nuernberg.homeekg.Constants.*;
+
+public class SignalActivity extends Activity implements View.OnClickListener {
 
     //Toggle Buttons Status Variables
     static boolean Lock;
@@ -59,6 +63,7 @@ public class SignalActivity extends Activity implements View.OnClickListener{
         //Hide Status bar
         this.getWindow().setFlags(WindowManager.LayoutParams.
                 FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_signal);
 
         //Set Background Color
@@ -66,7 +71,7 @@ public class SignalActivity extends Activity implements View.OnClickListener{
         background.setBackgroundColor(Color.BLACK);
 
         //Set Handler
-        BluetoothListActivity.gethandler(mHandler);
+        BluetoothListActivity.setHandler(mHandler);
 
         //Initialize GraphView
         GraphView = (LinearLayout) findViewById(R.id.Graph);
@@ -113,8 +118,7 @@ public class SignalActivity extends Activity implements View.OnClickListener{
         Stream = true;
     }
 
-    @SuppressLint("HandlerLeak")
-    Handler mHandler = new Handler(){
+    Handler mHandler = new Handler(Looper.myLooper()){
         @Override
         public void handleMessage(Message msg) {
             // TODO Auto-generated method stub
@@ -122,14 +126,14 @@ public class SignalActivity extends Activity implements View.OnClickListener{
 
             //Handle different messages
             switch(msg.what){
-                case BluetoothListActivity.SUCCESS_CONNECT:
+                case SUCCESS_CONNECT:
                     BluetoothListActivity.connectedThread = new BluetoothListActivity.ConnectedThread((BluetoothSocket)msg.obj);
                     Toast.makeText(getApplicationContext(), "Connected!", Toast.LENGTH_SHORT).show();
                     String s = "successfully connected";
                     BluetoothListActivity.connectedThread.start();
                     break;
 
-                case BluetoothListActivity.MESSAGE_READ:
+                case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     String strIncom = new String(readBuf, 0, 5);
 
@@ -175,7 +179,7 @@ public class SignalActivity extends Activity implements View.OnClickListener{
         // TODO Auto-generated method stub
         switch(v.getId()){
             case R.id.bConnect:
-                startActivity(new Intent("android.intent.action.BT1"));
+                startActivity(new Intent(this, BluetoothListActivity.class));
                 break;
 
             case R.id.bDisconnect:
@@ -208,11 +212,17 @@ public class SignalActivity extends Activity implements View.OnClickListener{
 
             case R.id.tbStream:
                 if (tbStream.isChecked()){
-                    if (BluetoothListActivity.connectedThread != null)
-                        BluetoothListActivity.connectedThread.write("E");
+                    if (BluetoothListActivity.connectedThread != null) {
+                        //TODO
+                        //BluetoothListActivity.connectedThread.write("E");
+                    }
+
                 } else {
-                    if (BluetoothListActivity.connectedThread != null)
-                        BluetoothListActivity.connectedThread.write("Q");
+                    if (BluetoothListActivity.connectedThread != null) {
+                        //TODO
+                        //BluetoothListActivity.connectedThread.write("Q");
+                    }
+
                 }
                 break;
         }
@@ -223,7 +233,8 @@ public class SignalActivity extends Activity implements View.OnClickListener{
         // TODO Auto-generated method stub
         if (BluetoothListActivity.connectedThread != null) {
             //Stop streaming
-            BluetoothListActivity.connectedThread.write("Q");
+            //TODO
+            //BluetoothListActivity.connectedThread.write("Q");
         }
         super.onBackPressed();
     }
