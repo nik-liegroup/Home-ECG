@@ -24,6 +24,7 @@ import com.jjoe64.graphview.GraphView.LegendAlign;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.LineGraphView;
+import com.th_nuernberg.homeekg.Constants;
 import com.th_nuernberg.homeekg.R;
 
 import static com.th_nuernberg.homeekg.Constants.*;
@@ -74,7 +75,7 @@ public class SignalActivity extends Activity implements View.OnClickListener {
         GraphView = (LinearLayout) findViewById(R.id.Graph);
         Series = new GraphViewSeries("EKG Signal",
                 //Color and thickness of the line
-                new GraphViewSeriesStyle(Color.YELLOW, 2),
+                new GraphViewSeriesStyle(Color.RED, 4),
                 new GraphViewData[] {new GraphViewData(0, 0)});
 
         graphView = new LineGraphView(this, "");
@@ -85,7 +86,7 @@ public class SignalActivity extends Activity implements View.OnClickListener {
         //graphView.setShowLegend(true);
         //graphView.setLegendAlign(LegendAlign.MIDDLE);
         graphView.setManualYAxis(true);
-        graphView.setManualYAxisBounds(5, 0);
+        graphView.setManualYAxisBounds(4095, 0);
         graphView.addSeries(Series);
         GraphView.addView(graphView);
 
@@ -110,6 +111,39 @@ public class SignalActivity extends Activity implements View.OnClickListener {
 
         tbStream = (ToggleButton)findViewById(R.id.tbStream);
         tbStream.setOnClickListener(this);
+
+        //TODO DEBUG GRAPH
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                byte i[] = new byte[6];
+                i[0] = 50;
+                i[1] = 49;
+                i[2] = 57;
+                i[3] = 55;
+                i[4] = 13;
+                i[5] = 10;
+
+                while (true) {
+                    try {
+                        try {
+                            sleep(4);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        Message readMsg = mHandler.obtainMessage(
+                                Constants.MESSAGE_READ, 0, -1,  i);
+                        readMsg.sendToTarget();
+                    } catch (Exception e) {
+                        Log.d(TAG, "Input stream was disconnected", e);
+                        break;
+                    }
+                }
+            }
+        };
+        //thread.start();
+        //TODO DEBUG GRAPH
     }
 
     //Handler
@@ -129,16 +163,17 @@ public class SignalActivity extends Activity implements View.OnClickListener {
 
                 case MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
-
+                    int numBytes = (int) msg.arg1;
                     //TODO Edit Further Processing Of Incoming Stream
-                    String incomeString = new String(readBuf, 0, 5);
+                    String incomeString = new String(readBuf, 0, 6);
 
-                    Log.d("Incoming String", incomeString);
-                    if (incomeString.indexOf('.') == 2 && incomeString.indexOf('s') == 0){
-                        incomeString = incomeString.replace("s", "");
-                        if (isFloatNumber(incomeString)){
+                    Log.d("Incoming String Value", incomeString);
+                        incomeString = incomeString.replace("\r", "")
+                                .replace("\n", "");
+                        if (isIntegerNumber(incomeString)){
+                            Log.d("Incoming String Length", Integer.toString(numBytes));
                             Series.appendData(new GraphViewData(graphLastXValue,
-                                    Double.parseDouble(incomeString)), AutoScrollX);
+                                    Integer.parseInt(incomeString)), AutoScrollX);
 
                             //X-Axis Control
                             if (graphLastXValue >= xView && Lock == true){
@@ -147,7 +182,7 @@ public class SignalActivity extends Activity implements View.OnClickListener {
                             }
 
                             //TODO Set True Value
-                            else graphLastXValue += 0.1;
+                            else graphLastXValue += 0.04;
 
                             if(Lock == true)
                                 graphView.setViewPort(0, xView);
@@ -158,14 +193,13 @@ public class SignalActivity extends Activity implements View.OnClickListener {
                             GraphView.removeView(graphView);
                             GraphView.addView(graphView);
                         }
-                    }
                     break;
             }
         }
 
-        public boolean isFloatNumber(String num){
+        public boolean isIntegerNumber(String num){
             try{
-                Double.parseDouble(num);
+                Integer.parseInt(num);
             } catch(NumberFormatException nfe) {
                 return false;
             }

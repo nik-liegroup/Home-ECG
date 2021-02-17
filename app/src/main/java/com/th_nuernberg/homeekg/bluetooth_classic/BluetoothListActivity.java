@@ -61,7 +61,7 @@ public class BluetoothListActivity extends Activity {
     private static BluetoothAdapter bluetoothAdapter;
     private ArrayAdapter<String> deviceListAdapter;
     private ArrayList<BluetoothDevice> bluetoothDevices = new ArrayList<>();
-    private final UUID EKG_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //TODO Specify UUID
+    private final UUID EKG_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     //Views//
     private Button scanButton;
@@ -337,6 +337,7 @@ public class BluetoothListActivity extends Activity {
         }
 
         // Closes the client socket and causes the thread to finish.
+        //TODO USE!
         public void cancel() {
             try {
                 mmSocket.close();
@@ -377,9 +378,8 @@ public class BluetoothListActivity extends Activity {
         }
 
         public void run() {
-            //TODO Adjust Buffer Size
-            mmBuffer = new byte[2];
-            int numBytes; // bytes returned from read()
+            mmBuffer = new byte[6];
+            int numBytes;
 
             // Keep listening to the InputStream until an exception occurs.
             while (true) {
